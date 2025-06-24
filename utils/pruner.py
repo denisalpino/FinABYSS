@@ -8,7 +8,7 @@ import numpy as np
 from scipy import stats
 
 import optuna
-from optuna.pruners import PercentilePruner, PatientPruner
+from optuna.pruners import PercentilePruner, PatientPruner, BasePruner
 from optuna.study._study_direction import StudyDirection
 from optuna.trial._state import TrialState
 from optuna.logging import _get_library_root_logger
@@ -202,58 +202,57 @@ class CustomPatientPruner(PatientPruner):
             return False
 
 
-# == == == == == == == == == == == == == == == == == == == == #
-#class NormalPruner(BasePruner):
-#    def __init__(
-#        self,
-#        percentile: float,
-#        n_last_trials: int = 10,
-#        n_warmup_steps: int = 0
-#    ) -> None:
-#        if n_warmup_steps < 0:
-#            raise ValueError(
-#                "Number of warmup steps cannot be negative but got {}.".format(n_warmup_steps)
-#            )
-#
-#        self._percentile = percentile
-#        self.n_last_trials = n_last_trials
-#        self._n_warmup_steps = n_warmup_steps
-#
-#    def prune(self, study: "optuna.study.Study", trial: "optuna.trial.FrozenTrial") -> bool:
-#        completed_trials = study.get_trials(deepcopy=False, states=(TrialState.COMPLETE,))
-#        n_trials = len(completed_trials)
-#
-#        if n_trials == 0:
-#            return False
-#
-#        if n_trials <= self.n_last_trials:
-#            return False
-#
-#        step = trial.last_step
-#        if step is None:
-#            return False
-#
-#        if step < self._n_warmup_steps:
-#            return False
-#
-#        direction = study.direction
-#        last_score = trial.intermediate_values.values()[-1]
-#
-#        if math.isnan(last_score):
-#            return True
-#
-#        if len(completed_trials) == 0:
-#            raise ValueError("No trials have been completed.")
-#
-#        intermediate_values = [t.intermediate_values[step] for t in completed_trials if step in t.intermediate_values]
-#
-#        if direction == StudyDirection.MAXIMIZE:
-#            percentile = 100 - self._percentile
-#        p = stats.norm(0, 1).ppf(percentile)
-#
-#        # А нормально ли распределены метрики?
-#        z_score = last_score - np.mean(intermediate_values) / np.var(intermediate_values)
-#
-#        if direction == StudyDirection.MAXIMIZE:
-#            return z_score < p
-#        return z_score > p
+class NormalPruner(BasePruner):
+    def __init__(
+        self,
+        percentile: float,
+        n_last_trials: int = 10,
+        n_warmup_steps: int = 0
+    ) -> None:
+        if n_warmup_steps < 0:
+            raise ValueError(
+                "Number of warmup steps cannot be negative but got {}.".format(n_warmup_steps)
+            )
+
+        self._percentile = percentile
+        self.n_last_trials = n_last_trials
+        self._n_warmup_steps = n_warmup_steps
+
+    def prune(self, study: "optuna.study.Study", trial: "optuna.trial.FrozenTrial") -> bool:
+        completed_trials = study.get_trials(deepcopy=False, states=(TrialState.COMPLETE,))
+        n_trials = len(completed_trials)
+
+        if n_trials == 0:
+            return False
+
+        if n_trials <= self.n_last_trials:
+            return False
+
+        step = trial.last_step
+        if step is None:
+            return False
+
+        if step < self._n_warmup_steps:
+            return False
+
+        direction = study.direction
+        last_score = trial.intermediate_values.values()[-1]
+
+        if math.isnan(last_score):
+            return True
+
+        if len(completed_trials) == 0:
+            raise ValueError("No trials have been completed.")
+
+        intermediate_values = [t.intermediate_values[step] for t in completed_trials if step in t.intermediate_values]
+
+        if direction == StudyDirection.MAXIMIZE:
+            percentile = 100 - self._percentile
+        p = stats.norm(0, 1).ppf(percentile)
+
+        # А нормально ли распределены метрики?
+        z_score = last_score - np.mean(intermediate_values) / np.var(intermediate_values)
+
+        if direction == StudyDirection.MAXIMIZE:
+            return z_score < p
+        return z_score > p

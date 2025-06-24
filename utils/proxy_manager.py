@@ -1,13 +1,12 @@
-from dataclasses import dataclass, field
-from typing import List, Optional
-from anyio import Semaphore
 import requests
+from typing import List, Optional
+from dataclasses import dataclass, field
 
 from asyncio import Semaphore
 from aiohttp import ClientSession
 
 
-# We can implement NamedTuple too, but dataclasses is more faster
+# We can implement NamedTuple too, but dataclasses is faster
 @dataclass(slots=True)
 class ProxyDense:
     protocol: str
@@ -36,8 +35,8 @@ class ProxyDense:
         return cls(protocol, login, password, ip_adress, port)
 
 class ProxyManager:
-    # TODO: Нужно сделать что-то вроде ProxyState, чтобы понимать какие прокси используются, а какие доступны.
-    # Возможно стоит добавить таймауты на использование прокси
+    # TODO: Need to make something like ProxyState to be informed which proxies are used and which are available.
+    # TODO: It might be worth adding timeouts on proxy usage
     def __init__(self) -> None:
         self.proxies: List[ProxyDense] = []
         self.__index: int = 0
@@ -62,7 +61,10 @@ class ProxyManager:
             login: str = "", password: str = "",
             ip_adress: str = "", port: str = ""
     ) -> None:
-        """Verify whether proxy can connect to the testing url and add it to list of proxies or raise exception"""
+        """
+        Verify whether proxy can connect to the testing url and add it
+        to list of proxies or raise exception
+        """
         if url:
             proxy = ProxyDense.from_url(url)
         elif not proxy:

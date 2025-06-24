@@ -3,24 +3,25 @@ from sklearn.inspection import permutation_importance
 import plotly.express as px
 import pandas as pd
 
-
+# TODO: Think about removing, cause Optuna has same function but better
 def show_feature_importance(df):
+    """Function for parallel coordinates vizualization based on Optuna or Ray Tune trials"""
     X = df.iloc[:, :-1]
     y = df.iloc[:, -1]
     X = pd.get_dummies(X)
 
-    # Обучаем модель
+    # Training random forests
     model = RandomForestRegressor(n_estimators=100, random_state=42)
     model.fit(X, y)
     result = permutation_importance(model, X, y, n_repeats=10, random_state=42)
 
-    # Создаем DataFrame с важностями
+    # Creating a DataFrame with importance
     importance_df = pd.DataFrame({
         'feature': X.columns,
         'importance': result.importances_mean
     })
 
-    # Нормализация до суммы 1
+    # Normalization
     total_importance = importance_df['importance'].sum()
     importance_df['normalized_importance'] = importance_df['importance'] / total_importance
 
@@ -50,18 +51,24 @@ def show_feature_importance(df):
     )
     fig.update_traces(
         marker=dict(line=dict(width=1, color='White')),
-        textposition='outside',  # Размещение текста снаружи столбца
+        textposition='outside',  # Placing text on the outside of a column
         textfont=dict(
-            color='white',  # Белый цвет текста
-            size=16  # Размер текста
+            color='white',
+            size=16
         )
     )
     fig.show()
     return fig
 
 
-def show_hpo(study, metric_name, title="Оптимизация гиперпараметров", top_n=30, lib="optuna"):
-    """Function for parallel coordinates vizualization based on Optuna trials"""
+def show_hpo(
+        study, metric_name,
+        title="Оптимизация гиперпараметров",
+        top_n=30,
+        lib="optuna",
+        layout_kw={}
+):
+    """Function for parallel coordinates vizualization based on Optuna or Ray Tune trials"""
     records = []
     for trial in study.trials:
         if lib == "optuna":
@@ -97,6 +104,7 @@ def show_hpo(study, metric_name, title="Оптимизация гиперпар�
         plot_bgcolor="black",
         height=900,
         width=1600,
+        **layout_kw
     )
     fig.show()
     return df.sort_values(metric_name, ascending=False), fig

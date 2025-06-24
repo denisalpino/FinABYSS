@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.metrics import silhouette_score
 from sklearn.manifold import trustworthiness
 
+# TODO: Trash, need to remove
 def calc_noiseless_silhouette(
         embeddings,
         embeddings_reduced,

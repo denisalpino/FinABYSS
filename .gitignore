@@ -27,6 +27,7 @@ paper/**/*.synctex.gz
 *.sqlite3
 *.npy
 articles.parquet
+tmp.ipynb
 all_in_one.ipynb
 *.html
 

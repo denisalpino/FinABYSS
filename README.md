@@ -2,36 +2,40 @@
 
 FinABYSS (Financial Aspect-Based Hybrid Semantic System)
 ---
-- [Functionality](#functionality)
-  - [🌏 Semantic Map](#-semantic-map)
-    - [💻 Installation](#-installation)
-    - [🛠 How to Use](#-how-to-use)
-  - [⭐️ Key Features](#️-key-features)
-    - [Local \& Global Structure](#local--global-structure)
-    - [Long Context](#long-context)
-    - [Interactivity](#interactivity)
-    - [Semantic Similarity](#semantic-similarity)
-    - [Search for texts](#search-for-texts)
-    - [Timeline infographic](#timeline-infographic)
-    - [Sample word cloud](#sample-word-cloud)
-  - [Predictor](#predictor)
+- [🌏 Semantic Map](#-semantic-map)
+  - [💻 Installation](#-installation)
+  - [🛠 How to Use](#-how-to-use)
+- [⚙️ Architecture](#️-architecture)
+- [⭐️ Key Features](#️-key-features)
+  - [🌀 Local \& Global Structure](#-local--global-structure)
+  - [📚 Long Context](#-long-context)
+  - [🚀 Speed up](#-speed-up)
 - [Corpus of financial news articles](#corpus-of-financial-news-articles)
 - [✍️ Notes](#️-notes)
   - [❗️ Key Dependencies](#️-key-dependencies)
   - [🌳 Project Structure](#-project-structure)
   - [🚧 Future Works](#-future-works)
-  - [Contacts](#contacts)
+  - [📞 Contacts](#-contacts)
 
-# Functionality
-## 🌏 Semantic Map
+
+This project aims to review the existing approach to financial forecasting and analysis, taking a step towards the analysis of multimodal data. We offer 2 key concepts:
+1. Aspect-based sentiment analysis (ABSA), in the context of which aspects are considered as topics;
+2. Considering financial sentiment as the strength and direction of information's influence on the price of a particular asset, rather than as an emotional coloring.
+
+These assumptions have 3 key implications:
+1. each document is represented by a set of topics from a predefined set without human involvement;
+2. each publication has $k$ sentiments corresponding to each topic;
+3. sentiments of one publication will vary depending on the asset.
+
+# 🌏 Semantic Map
 Семантическая карта может стать неотъемлемой частью рабочего процесса финансового аналитика, инвестора или кого-угодно еще, интересующегося финансами.
 
-### 💻 Installation
+## 💻 Installation
 1. Just download [HTML file](semantic_map.html), right-click and open it in Microsoft Edge or Google Chrome (both gives the fastest response).
 2. First, open the web-page and wait for it to fully load. You can determine whether the system is fully booted or not by the **pop-up windows when you hover over the dots**. If they pop up, the system is ready to function.
 3. When the loading is complete, press the SHIFT key once. This is to speed up zooming in/out of the camera.
 
-### 🛠 How to Use
+## 🛠 How to Use
 * The map shows the **Dots**, each one a financial news article:
   * the **size** of the dot reflects the number of characters in the article;
   * the **color** of the dot corresponds to the main topic of the article.
@@ -44,60 +48,47 @@ FinABYSS (Financial Aspect-Based Hybrid Semantic System)
   * After selecting items, the corresponding names are placed under the Search Box, from where they **can later be removed** by clicking on the cross.
 * Semantic Map also offers functionality to build a **Word Cloud** for any group of articles. The word cloud is constructed from the texts of the highlighted articles. The user can select an arbitrary group of articles by pressing the SHIFT key and starting to circle the area of interest. After selecting the objects, the Word Cloud will appear on the left side of the Map. Once the Word Cloud is built, the user can immediately select another group. **To delete a Word Cloud, you must reset all filters and press the SHIFT key once**.
 
-## ⭐️ Key Features
-### Local & Global Structure
-In the problem of dimensionality reduction, the **local structure refers to the dots and determines how accurately they are located relative to the nearest dots**. This absolutely true for our Smantic Map. Let's take a look at an example related to an Electric Vehicles cluster on a Semantic Map. After we have selected this cluster, we can see that it is somewhat fragmented, that is, it consists of several microclusters scattered over different parts of the map.
+![overview](docs/overview.gif)
 
-![electric_vehicles](docs/electric_vehicles.gif)
+# ⚙️ Architecture
 
-The subcluster in the lower right corner contains articles more about the safety of autonomous transport. If we look at the cluster on the left side of the map, which is adjacent to Mining Exploration, we can find that it's more about components such as lithium-ion batteries and electrical conductors for electrocars, which are usually made of gold. The same can be observed for the Cultural Tourism cluster, but in a more restrained form. Thus, mainland and island China can be observed in the upper part of the cluster, the Middle East from the bottom left, and South Asia on the bend.
+Данная система вовсе не ограничивается лишь семантической картой, которая на самом деле представляет собой интепретируемый интерфейс к более закрытому процессу — прогнозированию стоимости финансовых активов с использованием тематических оценок тональностей.
+
+![architecture](docs/architecture.png)
+
+![architecture_current_state](docs/architecture_current_state.png)
+
+# ⭐️ Key Features
+## 🌀 Local & Global Structure
+This map preserves the semantic relationship of both the clusters and the texts themselves to each other quite well. In the problem of dimensionality reduction, the **local structure refers to the dots and determines how accurately they are located relative to the nearest dots**. This absolutely true for our Semantic Map. Let's take a look at an example related to an Electric Vehicles cluster on a Semantic Map. After we have selected this cluster, we can see that it is somewhat fragmented, that is, it consists of several microclusters scattered over different parts of the map.
+
+![local_structure](docs/local_structure.gif)
+
+The subcluster in the lower right corner contains articles more about the safety of autonomous transport. If we look at the cluster on the upper right side of the map, we can find that it's more about Europe vehicles industry. The same can be observed for the Cultural Tourism cluster, but in a more restrained form. Thus, mainland and island China can be observed in the upper part of the cluster, the Middle East from the bottom left, and South Asia on the bend.
 
 Little differance lays in global structure that always determines as a represented variance of data. In our case, the **global structure mostly means the ability to continuously reflect a hierarchical structure**, that is, meso- and macro-clusters. It can be observed that such topical clusters as Hospitality Industry, Restaurant Industry, Alcohol Industry, Cannabis Industry, Cultural Tourism are quite close to each other, in fact forming the extended HoReCa industry.
 
-![HoReCa](docs/horeca.gif)
+![global_structure](docs/global_structure.gif)
 
 The same can be observed with the clusters of National Security, Cryptocurrency Regulation and Cybersecurity.
 
 So, on the Semantic Map, one can find some rather entertaining connections. For example, there is an area where the Electric Vehicle cluster is adjacent to the Mining Exploration, which we have been considering recently. If the word "lithium" is quite obvious, "gold" may surprise an unloaded user, however, the fact is that many times more gold is used for the production of electric cars than for cars with internal combustion engines. That is, the Semantic Map allows users who are not immersed in the specifics to discover rather deep inter-topic patterns.
 
-### Long Context
-### Interactivity
-На интерактивной семантической карте нас встречают кластеры, представляющие темы. Каждая **точка является уникальной статьей**, при этом **размер точки указывает на относительную длину статьи**. Более того, каждую статью, мы можем с легкостью найти в Google (в дальнейшем переадресация будет доработана до прямой ссылки).
+![golden_finding](docs/golden_finding.png)
 
-![Interactivity](docs/redirect.gif)
+Another version of the Semantic Map is also available (PaCMAP-based), which, unlike the current one, prioritizes the global structure, but makes it difficult to trace local relationships.
 
-Итак, мы открываем статью, и во-первых видим насколько она большая — предыдущие модели не смогли бы обработать настолько длинный текст. И во-вторых диоксид углерода действительно упоминается в данной статье.
+## 📚 Long Context
 
-### Semantic Similarity
-Как отмечалось ранее, данная карта достаточно хорошо сохраняет семантическую связь как кластеров, так и самих текстов между собой. Давайте посмотрим детальнее.
+Previously, the `BERT` model or its improved versions were most commonly used for embedding tasks, but all were limited to contexts of 512 tokens, which did not allow processing long texts. Sliding contex window type methods are costly and lose long term contextual relationships.
 
-![semantic_similarity](docs/semantic_similarity.gif)
+This project focuses on "budget" LMs designed to extract embeddings from long texts. The current solution is based on [`gte-modernbert-base`](https://huggingface.co/Alibaba-NLP/gte-modernbert-base), which can handle up to 8192 tokens. However, this is still not enough, so in the near future it is planned to switch to the newly released [`Qwen3-Embedding-4B`](https://huggingface.co/Qwen/Qwen3-Embedding-4B), which is capable of processing up to 32k tokens.
 
-Мы видим группу кластеров, связанных со здравоохранением, все они располагаются кучно, но каждый является уникальным. Далее мы можем наблюдать, что *Sustainable Finance*, *Cybersecurity* и *Green Energy* тоже располагаются крайне близко. То же касается и *Politics* с *Monetary Policy*, но данные два кластера, имеют немного большую дистанцию, что вполне оправдано.
+Thus, the current solution allows us to reach a **new level** — to process not only short posts in social networks and news headlines, but also press releases, news, transcripts of financial events and much more.
 
-### Search for texts
-Карта также предоставляет интерфейс к точечному обнаружению необходимых новостей по ключевым словам.
-
-![search](docs/geopolitics.gif)
-
-Так, Индонезию чаще всего можно встретить среди растущих рынков и политики, то же относится и к России, но Россия все же превалирует именно в политике.
-
-### Timeline infographic
-Что примечательно — мы можем **совмещать поиск по ключевым словам с распределением по датам** публикации или любым другим количественным признаком.
-
-![timeline_infographic](docs/trump_by_dates.gif)
-
-Так, мы можем наблюдать, что перед выборами в США, новостей о Трампе было меньше, чем после его победы. **Эта функция позволяет быстро и крайне просто выявлять исторические события и триггеры**.
-
-### Sample word cloud
-Наконец, самое интересное, что мы можем изучить, о чем говорят в новостях того или иного кластера, или просто выбранной группы.
-
-![wordcloud](docs/lasso.gif)
-
-Вполне резонно, что в *Sustainable Finance* чаще говорят об устойчивости, климате и углероде. Напротив, кластер с криптовалютой визуально подразделяется на два. В нижнем больше говорят о конкретных технологиях, а в верхнем скорее общеобразовательный контент на тему криптовалют.
-
-## Predictor
-Данная система вовсе не ограничивается лишь семантической картой, которая на самом деле представляет собой интепретируемый интерфейс к более закрытому процессу — прогнозированию стоимости финансовых активов с использованием тематических оценок тональностей.
+## 🚀 Speed up
+* Embedding Extraction — 9 times
+* Models training (UMAP & HDBSCAN) — 80 times
 
 # Corpus of financial news articles
 Датасет со всеми статьями расположен в [репозитории](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) на HuggingFace.
@@ -106,7 +97,7 @@ So, on the Semantic Map, one can find some rather entertaining connections. For 
 
 ## ❗️ Key Dependencies
 
-To reproduce the experiments, you need to create an environment in which all the dependencies from `requirements.txt`, as well as `CUDA 12.1` and `cuML 25.06.00` for UMAP and HDBSCAN training. Core dependencies include:
+To reproduce the experiments, you need to create `Python 3.10` environment in which all the dependencies from `requirements.txt`, as well as `CUDA 12.1` and `cuML 25.06.00` for UMAP and HDBSCAN training. Core dependencies include:
 - [`BERTopic`](https://github.com/MaartenGr/BERTopic) — a convenient API for vizualizing generated topics, working with topic texts, and hierarchical structure;
 - [`PyTorch`](https://github.com/pytorch/pytorch) — to speed up the process of embedding extraction and mean pooling;
 - [`Transformers`](https://github.com/huggingface/transformers) & [`SBERT`](https://sbert.net/) — to speed up the process of embedding extraction and mean pooling;
@@ -193,11 +184,8 @@ FinABYSS
 | Companys' Semantic Graph                                                       | Hard       | Low      | backlog        | &#x2610; ...
 | Graph-based News Representation                                                | Hard       | Low      | backlog        | &#x2610; ...
 
-## Contacts
+## 📞 Contacts
 
 Email: denis.tomin.alpino@gmail.com
 
 Telegram: [@denisalpino](https://t.me/denisalpino)
-
-* Embedding Extraction — 9 times
-* Models training (UMAP & HDBSCAN) — 80 times

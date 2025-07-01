@@ -16,7 +16,7 @@ FinABYSS (Financial Aspect-Based Hybrid Semantic System)
   - [❗️ Key Dependencies](#️-key-dependencies)
   - [🌳 Project Structure](#-project-structure)
   - [🚧 Future Works](#-future-works)
-  - [Corpus of financial news articles](#corpus-of-financial-news-articles)
+  - [📝 Corpus](#-corpus)
   - [📞 Contacts](#-contacts)
 
 
@@ -29,8 +29,9 @@ These assumptions have 3 key implications:
 2. each publication has $k$ sentiments corresponding to each topic;
 3. sentiments of one publication will vary depending on the asset.
 
+The study details and **partially develops an architecture** that implements the described approach. The developed alpha version of the system is called FinABYSS (Financial Aspect-Based hybrid Semantic System) and is based on the Embedding Model, MoE, Feature Synchronization Mechanism (FSM), CNN-LSTM with slow fusion mechanism and analytical GUI.
+
 ## 🌏 Semantic Map
-Семантическая карта может стать неотъемлемой частью рабочего процесса финансового аналитика, инвестора или кого-угодно еще, интересующегося финансами.
 
 ### 💻 Installation
 1. Just download [HTML file](semantic_map.html), right-click and open it in Microsoft Edge or Google Chrome (both gives the fastest response).
@@ -205,8 +206,12 @@ FinABYSS
 | Companys' Semantic Graph                                                       | Hard       | Low      | backlog        | &#x2610; ...
 | Graph-based News Representation                                                | Hard       | Low      | backlog        | &#x2610; ...
 
-### Corpus of financial news articles
-The corpus with all articles is located at [repository](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) on HuggingFace.
+### 📝 Corpus
+The corpus with all articles is located at private [repository](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) on HuggingFace. Raw data before preprocessing has 1,304,717 financial articles and takes up 6.4Gb. Example of data structure:
+|title|source|datetime|assets|text|url|
+|--|--|--|--|--|--|
+EquipmentShare Announces Successful Closing of Upsized Bond Offering|ACCESS Newswire|2023-09-21T16:15:00.000Z|[]|COLUMBIA, MO / ACCESSWIRE / September 21, 2023 / EquipmentShare.com Inc ("EquipmentShare"), one of the fastest-growing...|https://finance.yahoo.com/news/equipmentshare-announces-successful-closing-upsized-161500942.html
+Top Stock Reports for Walmart, Adobe & Caterpillar|Zacks|2024-10-04T21:18:00.000Z|["ADBE", "CAT", "EBGEF", "HOVVB", "WMT"]|Friday, October 4, 2024The Zacks Research Daily presents the best research output of our analyst team. Today's Research Daily features new research reports on 16 major stocks...|https://finance.yahoo.com/news/top-stock-reports-walmart-adobe-211800073.html
 
 ### 📞 Contacts
 

@@ -3,8 +3,8 @@
 FinABYSS (Financial Aspect-Based Hybrid Semantic System)
 ---
 - [Functionality](#functionality)
-  - [Semantic Map](#semantic-map)
-    - [💻 Install](#-install)
+  - [🌏 Semantic Map](#-semantic-map)
+    - [💻 Installation](#-installation)
     - [🛠 How to Use](#-how-to-use)
   - [⭐️ Key Features](#️-key-features)
     - [Local \& Global Structure](#local--global-structure)
@@ -15,18 +15,18 @@ FinABYSS (Financial Aspect-Based Hybrid Semantic System)
     - [Timeline infographic](#timeline-infographic)
     - [Sample word cloud](#sample-word-cloud)
   - [Predictor](#predictor)
-- [Key dependencies](#key-dependencies)
 - [Corpus of financial news articles](#corpus-of-financial-news-articles)
-- [Notes](#notes)
-  - [🚧 Future works](#-future-works)
-  - [📍 Project Structure](#-project-structure)
-  - [P.S.](#ps)
+- [✍️ Notes](#️-notes)
+  - [❗️ Key Dependencies](#️-key-dependencies)
+  - [🌳 Project Structure](#-project-structure)
+  - [🚧 Future Works](#-future-works)
+  - [Contacts](#contacts)
 
 # Functionality
-## Semantic Map
+## 🌏 Semantic Map
 Семантическая карта может стать неотъемлемой частью рабочего процесса финансового аналитика, инвестора или кого-угодно еще, интересующегося финансами.
 
-### 💻 Install
+### 💻 Installation
 1. Just download [HTML file](semantic_map.html), right-click and open it in Microsoft Edge or Google Chrome (both gives the fastest response).
 2. First, open the web-page and wait for it to fully load. You can determine whether the system is fully booted or not by the **pop-up windows when you hover over the dots**. If they pop up, the system is ready to function.
 3. When the loading is complete, press the SHIFT key once. This is to speed up zooming in/out of the camera.
@@ -99,38 +99,22 @@ So, on the Semantic Map, one can find some rather entertaining connections. For 
 ## Predictor
 Данная система вовсе не ограничивается лишь семантической картой, которая на самом деле представляет собой интепретируемый интерфейс к более закрытому процессу — прогнозированию стоимости финансовых активов с использованием тематических оценок тональностей.
 
-# Key dependencies
-- [Стилевое оформление ВКР](https://github.com/itonik/spbu_diploma/tree/master) с LaTeX-шаблоном для ВКР по ГОСТам;
-- [BERTopic](https://github.com/MaartenGr/BERTopic);
-- [alpha_vantage](https://github.com/RomelTorres/alpha_vantage);
-- [PyTorch](https://github.com/pytorch/pytorch);
-- [TensorBoard](https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html) (доки по работе с PyTorch);
-- [Polars](https://docs.pola.rs/) для ускорения работы с данными;
-- [CUDA 12.1](https://developer.nvidia.com/cuda-toolkit) для ускорения обучения моделей;
-- [cuML](https://docs.rapids.ai/api/cuml/stable/) для ускорения обучения моделей;
-
 # Corpus of financial news articles
 Датасет со всеми статьями расположен в [репозитории](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) на HuggingFace.
 
-# Notes
-## 🚧 Future works
-| Task                                                                           | Complexity | Priority | Current Status | Finished  |
-|--------------------------------------------------------------------------------|------------|----------|----------------|-----------|
-| Additional Corpus Cleaning                                                     | Easy       | High     | done           | &#x2611; Formalize rules
-| Improve c-TF-IDF implementation                                                | Easy       | High     | done           | &#x2611; Configure MinimalMarginalRate from KeyBERT
-| Improve Representation of Topics                                               | Normal     | High     | done           | &#x2611; Plug in the GPT-4o<br>&#x2611; Figure out how to account for the hierarchical structure
-| Develop Hierarchical Structure Processing Logic Inspiring by BERTopic          | Normal     | Medium   | in progress    | &#x2611; Explore the BERTopic source code<br>&#x2610; Develop logic for assigning topic names to each level in the hierarchy
-| Full-body Training                                                             | Normal     | High     | done           | &#x2611; Find and rent infrastructure with GPUs<br>&#x2611; Customize the environment<br>&#x2611; Adapt training code
-| ModernBERT Domain Adaptive Pre-Training                                        | Hard       | High     | planning       | &#x2610; (optional) Expand the corpus<br>&#x2610; Find and rent infrastructure with GPUs<br>&#x2610; Write training code
-| Evaluate and Compare ModernBERT & FinBERT (DAPT) on GLUE & FLUE benchmarks     | Hard       | High     | planning       | &#x2610; Find and gather all datasets from benchmarks<br>&#x2610; Write code to fine-tune for each of the tasks
-| Refine the Semantic Map                                                        | Normal     | Medium   | planning       | &#x2610; Rework hover labels<br>&#x2610; Write custom code to build a word cloud using the native TF-IDF<br>&#x2610; Implement filtering by source<br>&#x2610; Improve the visual design<br>&#x2610; Develop more diverse infographics
-| Refine the Text Search in the Semantic Map                                     | Normal     | Low      | planning       | &#x2610; Create the database for texts<br>&#x2610; Remove the texts from hover labels and migrate them into the database<br>&#x2610; Connect search system in the semantic map wit database
-| Fine-tuning ModernBERT for Dense Embeddings                                    | Hard       | High     | planning       | &#x2610; ...
-| Experimentation with Leiden Сlustering on kNN Graphs                           | Normal     | Low      | backlog        | &#x2610; ...
-| Companys' Semantic Graph                                                       | Hard       | Low      | backlog        | &#x2610; ...
-| Graph-based News Representation                                                | Hard       | Low      | backlog        | &#x2610; ...
+# ✍️ Notes
 
-## 📍 Project Structure
+## ❗️ Key Dependencies
+
+To reproduce the experiments, you need to create an environment in which all the dependencies from `requirements.txt`, as well as `CUDA 12.1` and `cuML 25.06.00` for UMAP and HDBSCAN training. Core dependencies include:
+- [`BERTopic`](https://github.com/MaartenGr/BERTopic) — a convenient API for vizualizing generated topics, working with topic texts, and hierarchical structure;
+- [`PyTorch`](https://github.com/pytorch/pytorch) — to speed up the process of embedding extraction and mean pooling;
+- [`Transformers`](https://github.com/huggingface/transformers) & [`SBERT`](https://sbert.net/) — to speed up the process of embedding extraction and mean pooling;
+- [`alpha_vantage`](https://github.com/RomelTorres/alpha_vantage) — API for collecting minute-long OHLCV data;
+- [`Polars`](https://docs.pola.rs/) — for lazy data preprocessing.
+
+
+## 🌳 Project Structure
 <details>
 <summary>
 FinABYSS
@@ -139,80 +123,81 @@ FinABYSS
 ```bash
 ├── data/
 │   ├── preprocessed/
-│   │   ├── articles.parquet
-│   │   ├── embeddings_mp.npy
+│   │   ├── articles.parquet    # Fully preprocessed articles by texts and its metadata
+│   │   ├── embeddings_mp.npy   # Mean pooled embeddings for each article in the corpus
 │   ├── raw/
-│   │   ├── articles.parquet
-│   │   ├── news_urls.parquet
+│   │   ├── articles.parquet    # Parsed news articles with their metadata
+│   │   ├── news_urls.parquet   # Scrapped urls leading to rhe news pages on Yahoo! Finance
 │   │   └── ohlcv.parquet
-│   └── sample/
+│   └── sample/                 # Training sample of 126.000 articles + their embeddings
 │       ├── articles.parquet
 │       ├── embeddings.npy
 │       └── embeddings_l2.npy
-├── docs/
-│   └── ...
+├── docs/                       # Images and gifs for README
 ├── notebooks/
-│   ├── 01_data_collecting/
+│   ├── 01_data_collecting/     # Data collecting pipelines
 │   │   ├── ohlcv.ipynb
 │   │   └── yahoo_articles.ipynb
-│   ├── 02_data_preprocessing/
+│   ├── 02_data_preprocessing/  # Data prep, viz, feature extraction and sampling pipelines
 │   │   ├── img/
-│   │   │   ├── dark/
-│   │   │   │   └── ...
-│   │   │   └── light/
-│   │   │       └── ...
 │   │   ├── 01_articles_preprocessing.ipynb
 │   │   ├── 02_articles_vizualization.ipynb
 │   │   ├── 03_feature_extraction.ipynb
 │   │   └── 04_data_sampling.ipynb
 │   ├── 03_topic_modeling/
-│   │   ├── img/
-│   │   │   └── ...
+│   │   ├── img/                # Images from model analysis and topic viz (L2-based model)
 │   │   ├── models/
-│   │   │   ├── v1/
-│   │   │   │   └── ...
-│   │   │   ├── v2/
-│   │   │   │   └── ...
-│   │   │   ├── v3/
-│   │   │   │   └── ...
+│   │   │   ├── v1/             # Exploratory first version of topic model
+│   │   │   ├── v2/             # Topic model based on L2-Euclidean dist metric
+│   │   │   ├── v3/             # Topic model based on Cosine & Euclidean dist metrics
 │   │   │   └── summary.md
 │   │   ├── 01_hpo.ipynb
 │   │   ├── 02_topic_modeing.ipynb
 │   │   ├── 03_model_analysis.ipynb
-│   │   ├── 04_topic_vizualization.ipynb
-│   │   └── tmp.ipynb
+│   │   └── 04_topic_vizualization.ipynb
 │   └── 04_semantic_map_dev/
-│       ├── data/
-│       │   └── ...
-│       ├── semantic_map.ipynb
-│       └── semantic_map_l2.html
+│       ├── data/                # Embeddings from the intermediate space and 2D + labels
+│       ├── semantic_map.ipynb   # HTML/CSS/JS + Python wrapper for Semantic Map
+│       └── semantic_map_l2.html # Semantic Map based on L2-Euclidean dist metric
 ├── paper/
-│   ├── eng/
-│   │   ├── img/
-│   │   │   └── ...
-│   │   ├── struct/
-│   │   │   └── ...
-│   │   ├── tab/
-│   │   │   └── ...
-│   │   ├── bibliography.bib
-│   │   ├── main_eng.pdf
-│   │   ├── main_eng.tex
-│   │   └── preamble.tex
-│   └── ru/
-│       └── ...
-├── parsers/
-│   └── yahoo_parser.py
+│   ├── eng/    # English thesis with bibliography and LaTeX
+│   └── ru/     # Russian version of thesis (badly adapted)
+├── parsers/    # Still class for parsing URLs and news from only Yahoo! Finance
 ├── utils/
-│   ├── api_key_manager.py
-│   ├── custom_tqdm.py
-│   ├── metrics.py
-│   ├── proxy_manager.py
-│   ├── pruner.py
-│   └── vizualization.py
+│   ├── api_key_manager.py     # API-key rotator class
+│   ├── custom_tqdm.py         # TQDM-wrapper for monitoring parsing process
+│   ├── metrics.py             # Metrics for HPO (finally unused)
+│   ├── proxy_manager.py       # Proxy-rotator for parsing articles
+│   ├── pruner.py              # 3 pruners for HPO with Optuna
+│   └── vizualization.py       # Functions for viz parallel coordinates & feature importance
 ├── README.md
 ├── requirements.txt
-└── semantic_map.html
+└── semantic_map.html # Main Semantic Map based on Cosine + Euclidean dist metric
 ```
 </details>
 
-## P.S.
+## 🚧 Future Works
+| Task                                                                           | Complexity | Priority | Current Status | Finished  |
+|--------------------------------------------------------------------------------|------------|----------|----------------|-----------|
+| ~~Additional Corpus Cleaning~~                                                     | Easy       | High     | done           | &#x2611; Formalize rules
+| ~~Improve c-TF-IDF implementation~~                                                | Easy       | High     | done           | &#x2611; Configure MinimalMarginalRate from KeyBERT
+| ~~Improve Representation of Topics~~                                               | Normal     | High     | done           | &#x2611; Plug in the GPT-4o<br>&#x2611; Figure out how to account for the hierarchical structure
+| ~~Develop Hierarchical Structure Processing Logic Inspiring by BERTopic~~          | Normal     | Medium   | in progress    | &#x2611; Explore the BERTopic source code<br>&#x2611; Develop logic for assigning topic names to each level in the hierarchy
+| Full-body Training (all corpus)                                                             | Normal     | High     | done           | &#x2610; Find and rent infrastructure with GPUs<br>&#x2610; Customize the environment<br>&#x2610; Adapt training code
+| ModernBERT Domain Adaptive Pre-Training                                        | Hard       | High     | planning       | &#x2610; (optional) Expand the corpus<br>&#x2610; Find and rent infrastructure with GPUs<br>&#x2610; Write training code
+| Evaluate and compare ModernBERT (DAPT) & FinBERT on GLUE & FLUE benchmarks     | Hard       | High     | planning       | &#x2610; Find and gather all datasets from benchmarks<br>&#x2610; Write code to fine-tune for each of the tasks
+| ~~Refine the Semantic Map~~                                                        | Normal     | Medium   | done       | &#x2611; Rework hover labels<br>&#x2611; Write custom code to build a word cloud using the native TF-IDF<br>&#x2611; Implement filtering by source<br>&#x2611; Improve the visual design<br>&#x2611; Develop more diverse infographics
+| Refine the Text Search in the Semantic Map                                     | Normal     | Low      | planning       | &#x2610; Create the vector DB (FAISS) for texts<br>&#x2611; Remove the texts from hover labels and migrate them into the database<br>&#x2610; Connect search system in the semantic map wit database
+| Fine-tuning ModernBERT (DAPT) for Dense Embeddings                                    | Hard       | High     | planning       | &#x2610; ...
+| Experimentation with Leiden Сlustering on kNN Graphs                           | Normal     | Low      | backlog        | &#x2610; ...
+| Companys' Semantic Graph                                                       | Hard       | Low      | backlog        | &#x2610; ...
+| Graph-based News Representation                                                | Hard       | Low      | backlog        | &#x2610; ...
+
+## Contacts
+
+Email: denis.tomin.alpino@gmail.com
+
+Telegram: [@denisalpino](https://t.me/denisalpino)
+
+* Embedding Extraction — 9 times
+* Models training (UMAP & HDBSCAN) — 80 times

@@ -29,7 +29,7 @@ paper/**/*.synctex.gz
 articles.parquet
 tmp.ipynb
 all_in_one.ipynb
-*.html
+notebooks/04_semantic_map_dev/**.html
 
 # Models files
 notebooks/03_topic_modeling/models/**/*.pkl

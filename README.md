@@ -2,15 +2,6 @@
 
 FinABYSS (Financial Aspect-Based Hybrid Semantic System)
 ---
-- [🌏 Semantic Map](#-semantic-map)
-  - [💻 Installation](#-installation)
-  - [🛠 How to Use](#-how-to-use)
-- [⚙️ Architecture](#️-architecture)
-- [⭐️ Key Features](#️-key-features)
-  - [🌀 Local \& Global Structure](#-local--global-structure)
-  - [📚 Long Context](#-long-context)
-  - [🚀 Speed up](#-speed-up)
-- [Corpus of financial news articles](#corpus-of-financial-news-articles)
 - [✍️ Notes](#️-notes)
   - [❗️ Key Dependencies](#️-key-dependencies)
   - [🌳 Project Structure](#-project-structure)
@@ -27,15 +18,15 @@ These assumptions have 3 key implications:
 2. each publication has $k$ sentiments corresponding to each topic;
 3. sentiments of one publication will vary depending on the asset.
 
-# 🌏 Semantic Map
+## 🌏 Semantic Map
 Семантическая карта может стать неотъемлемой частью рабочего процесса финансового аналитика, инвестора или кого-угодно еще, интересующегося финансами.
 
-## 💻 Installation
+### 💻 Installation
 1. Just download [HTML file](semantic_map.html), right-click and open it in Microsoft Edge or Google Chrome (both gives the fastest response).
 2. First, open the web-page and wait for it to fully load. You can determine whether the system is fully booted or not by the **pop-up windows when you hover over the dots**. If they pop up, the system is ready to function.
 3. When the loading is complete, press the SHIFT key once. This is to speed up zooming in/out of the camera.
 
-## 🛠 How to Use
+### 🛠 How to Use
 * The map shows the **Dots**, each one a financial news article:
   * the **size** of the dot reflects the number of characters in the article;
   * the **color** of the dot corresponds to the main topic of the article.
@@ -50,7 +41,7 @@ These assumptions have 3 key implications:
 
 ![overview](docs/overview.gif)
 
-# ⚙️ Architecture
+## ⚙️ Architecture
 
 Данная система вовсе не ограничивается лишь семантической картой, которая на самом деле представляет собой интепретируемый интерфейс к более закрытому процессу — прогнозированию стоимости финансовых активов с использованием тематических оценок тональностей.
 
@@ -58,8 +49,8 @@ These assumptions have 3 key implications:
 
 ![architecture_current_state](docs/architecture_current_state.png)
 
-# ⭐️ Key Features
-## 🌀 Local & Global Structure
+## ⭐️ Key Features
+### 🌀 Local & Global Structure
 This map preserves the semantic relationship of both the clusters and the texts themselves to each other quite well. In the problem of dimensionality reduction, the **local structure refers to the dots and determines how accurately they are located relative to the nearest dots**. This absolutely true for our Semantic Map. Let's take a look at an example related to an Electric Vehicles cluster on a Semantic Map. After we have selected this cluster, we can see that it is somewhat fragmented, that is, it consists of several microclusters scattered over different parts of the map.
 
 ![local_structure](docs/local_structure.gif)
@@ -76,9 +67,11 @@ So, on the Semantic Map, one can find some rather entertaining connections. For 
 
 ![golden_finding](docs/golden_finding.png)
 
+This is absolutely amazing, because even the marginally immersed person can now extremely quickly test hypotheses and explore areas and connections of interest at an accelerated pace.
+
 Another version of the Semantic Map is also available (PaCMAP-based), which, unlike the current one, prioritizes the global structure, but makes it difficult to trace local relationships.
 
-## 📚 Long Context
+### 📚 Long Context
 
 Previously, the `BERT` model or its improved versions were most commonly used for embedding tasks, but all were limited to contexts of 512 tokens, which did not allow processing long texts. Sliding contex window type methods are costly and lose long term contextual relationships.
 
@@ -86,16 +79,15 @@ This project focuses on "budget" LMs designed to extract embeddings from long te
 
 Thus, the current solution allows us to reach a **new level** — to process not only short posts in social networks and news headlines, but also press releases, news, transcripts of financial events and much more.
 
-## 🚀 Speed up
-* Embedding Extraction — 9 times
-* Models training (UMAP & HDBSCAN) — 80 times
+### 🚀 Speed up
 
-# Corpus of financial news articles
-Датасет со всеми статьями расположен в [репозитории](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) на HuggingFace.
+1. Comparing our own implementation of the embedding extraction pipeline with presented in [`SBERT`](https://sbert.net/), **our version is 9 times faster**. The key differences are the use of mixed precision (fp16), automation of CPU and GPU load balancing, inference mode activation, removal of unnecessary converting operations, and periodic manual cache flushing.
+2. Moreover, referring to the `UMAP` and `HDBSCAN` models used, their **training was accelerated by about 80 times** by switching to GPU versions from `cuML`.
+3. The acceleration also applies to the manual labor required for classic topic markup. We **reduced the time of experts to assign labels to generated clusters 3 times** using MMR and GPT4o-mini for this purpose. **The most time-consuming step of manual document labeling as a classification task was eliminated altogether**.
 
-# ✍️ Notes
+## ✍️ Notes
 
-## ❗️ Key Dependencies
+### ❗️ Key Dependencies
 
 To reproduce the experiments, you need to create `Python 3.10` environment in which all the dependencies from `requirements.txt`, as well as `CUDA 12.1` and `cuML 25.06.00` for UMAP and HDBSCAN training. Core dependencies include:
 - [`BERTopic`](https://github.com/MaartenGr/BERTopic) — a convenient API for vizualizing generated topics, working with topic texts, and hierarchical structure;
@@ -105,7 +97,7 @@ To reproduce the experiments, you need to create `Python 3.10` environment in wh
 - [`Polars`](https://docs.pola.rs/) — for lazy data preprocessing.
 
 
-## 🌳 Project Structure
+### 🌳 Project Structure
 <details>
 <summary>
 FinABYSS
@@ -167,7 +159,7 @@ FinABYSS
 ```
 </details>
 
-## 🚧 Future Works
+### 🚧 Future Works
 | Task                                                                           | Complexity | Priority | Current Status | Finished  |
 |--------------------------------------------------------------------------------|------------|----------|----------------|-----------|
 | ~~Additional Corpus Cleaning~~                                                     | Easy       | High     | done           | &#x2611; Formalize rules
@@ -184,7 +176,10 @@ FinABYSS
 | Companys' Semantic Graph                                                       | Hard       | Low      | backlog        | &#x2610; ...
 | Graph-based News Representation                                                | Hard       | Low      | backlog        | &#x2610; ...
 
-## 📞 Contacts
+### Corpus of financial news articles
+The corpus with all articles is located at [repository](https://huggingface.co/datasets/denisalpino/YahooFinanceNewsRaw) on HuggingFace.
+
+### 📞 Contacts
 
 Email: denis.tomin.alpino@gmail.com
 

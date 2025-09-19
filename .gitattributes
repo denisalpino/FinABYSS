@@ -1,4 +1,4 @@
 semantic_map.html filter=lfs diff=lfs merge=lfs -text
 *.html linguist-generated=true
 *.ipynb linguist-generated=true
-*.tex linguist-generated=true
+paper/** linguist-generated=true
